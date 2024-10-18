@@ -5,8 +5,8 @@ import (
 )
 
 type Entity struct {
-	CreatedAt time.Time  `json:"created_at"`
-	CreatedBy int        `json:"created_by"`
-	UpdatedAt *time.Time `json:"updated_at"`
-	UpdatedBy *int       `json:"updated_by"`
+	Created   time.Time  `json:"created"`
+	Createdby int        `json:"createdby"`
+	Updated   *time.Time `json:"updated"`
+	Updatedby *int       `json:"updatedby"`
 }

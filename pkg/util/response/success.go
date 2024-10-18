@@ -3,7 +3,7 @@ package response
 import (
 	"net/http"
 
-	"go-base-structure/model/base"
+	"go-authorization/model/base"
 
 	"github.com/labstack/echo/v4"
 )

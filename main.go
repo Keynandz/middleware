@@ -4,13 +4,11 @@ import (
 	"net/http"
 	"os"
 
-	"go-base-structure/pkg/db"
-	"go-base-structure/pkg/minio"
-	"go-base-structure/pkg/migration"
-	"go-base-structure/pkg/util"
-	"go-base-structure/pkg/util/env"
-	"go-base-structure/routes"
-    "go-base-structure/cron"
+	"go-authorization/pkg/db"
+	"go-authorization/pkg/migration"
+	"go-authorization/pkg/util"
+	"go-authorization/pkg/util/env"
+	"go-authorization/routes"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -28,14 +26,8 @@ func main() {
 	// Database
 	db.Init()
 
-	// Minio
-	minio.Init()
-
 	// Migration
 	migration.Init()
-
-    // Cron
-    cron.Init()
 
 	// Validator
 	e.Validator = &util.CustomValidation{Validator: validator.New()}
@@ -52,6 +44,7 @@ func main() {
 
 	// Route
 	routes.Init(e.Group("/api/v1"))
+	routes.Interface(e.Group(""), e)
 
 	if os.Getenv("SSL_CERT_PATH") != "" && os.Getenv("SSL_KEY_PATH") != "" {
 		e.Logger.Fatal(e.StartTLS(":"+env.GetString("PORT"), os.Getenv("SSL_CERT_PATH"), os.Getenv("SSL_KEY_PATH")))

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"go-base-structure/pkg/constant"
+	"go-authorization/pkg/constant"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"

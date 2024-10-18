@@ -1,6 +1,6 @@
 package response
 
-import 	"go-base-structure/model/base"
+import 	"go-authorization/model/base"
 
 
 type Meta struct {

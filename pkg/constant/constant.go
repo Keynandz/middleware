@@ -3,7 +3,7 @@ package constant
 // General
 const (
 	APP               = "APP"
-	APP_NAME          = "go-base-structure"
+	APP_NAME          = "go-authorization"
 	PORT              = "PORT"
 	ENV               = "ENV"
 	VERSION           = "VERSION"
@@ -27,7 +27,7 @@ const (
 	DB_NAME               = "DB_NAME"
 	DB_SSLMODE            = "DB_SSLMODE"
 	DB_TZ                 = "DB_TZ"
-	DB_BASE_STRUCTURE     = "go-base-structure"
+	DB_BASE_STRUCTURE     = "go-authorization"
 
 	MIGRATION_ENABLED = "MIGRATION_ENABLED"
 	SEEDER_ENABLED    = "SEEDER_ENABLED"

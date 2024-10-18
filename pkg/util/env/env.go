@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"go-base-structure/pkg/file"
+	"go-authorization/pkg/file"
 
 	"github.com/joho/godotenv"
 )
@@ -22,7 +22,7 @@ func (*env) Load() {
 	mode := flag.String("mode", "dev", "dev, prod or stag")
 	flag.Parse()
 
-	os.Setenv("PROJECT_DIR", "go-base-structure") // should change this first for new projects
+	os.Setenv("PROJECT_DIR", "go-authorization") // should change this first for new projects
 	rootPath := file.GetRootDirectory()
 
 	switch *mode {

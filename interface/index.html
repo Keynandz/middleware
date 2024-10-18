@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            display: none;
+        }
+        .logout-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #FF0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
+            float: right;
+        }
+        .logout-button:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>User List</h2>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>User ID</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button class="logout-button" id="logoutBtn">Logout</button>
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const jwtToken = localStorage.getItem('jwt');
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (!jwtToken) {
+                window.location.href = '/login';  // Redirect to /login
+                return;
+            }
+
+            fetch('http://localhost:8500/api/v1/feature/user', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`
+                }
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    errorMessage.textContent = "Invalid or expired token. Redirecting to login...";
+                    errorMessage.style.display = 'block';
+                    setTeeeeeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.meta && data.meta.success) {
+                    const users = data.data;
+                    const tableBody = document.getElementById('userTable').querySelector('tbody');
+                    
+                    users.forEach(user => {
+                        const row = `<tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>${user.user_id}</td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                } else {
+                    errorMessage.textContent = "Failed to fetch users.";
+                    errorMessage.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                errorMessage.textContent = "Error fetching user list."; 
+                errorMessage.style.display = 'block';
+                console.error('Error:', error);
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('jwt');
+                window.location.href = '/login';  // Redirect to /login
+            });
+        }
+    </script>
+</body>
+</html>

@@ -3,10 +3,10 @@ package migration
 import (
 	"fmt"
 
-	dbDriver "go-base-structure/pkg/db"
-	model "go-base-structure/model/entity"
-	"go-base-structure/pkg/constant"
-	"go-base-structure/pkg/util/env"
+	dbDriver "go-authorization/pkg/db"
+	model "go-authorization/model/entity"
+	"go-authorization/pkg/constant"
+	"go-authorization/pkg/util/env"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
@@ -31,7 +31,8 @@ func Init() {
 	mgConfigurations := map[string]Migration{
 		constant.DB_BASE_STRUCTURE: &migration{
 			DbModels: &[]interface{}{
-				model.FeatureModel{},
+				model.MasterRoleModel{},
+				model.MasterRoleModel{},
 			},
 			IsAutoMigrate: true,
 		},
